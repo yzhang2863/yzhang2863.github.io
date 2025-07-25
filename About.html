@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Vista | About</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .about-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(209, 196, 233, 0.2) 0%, rgba(26, 12, 46, 0) 70%);
+            z-index: -1;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            padding: 60px 40px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 60px;
+            margin-top: 80px; 
+        }
+
+        .about-image {
+            flex: 0 0 45%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: var(--transition);
+        }
+
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-text {
+            flex: 0 0 50%;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: var(--transition);
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #f3e5f5, #d1c4e9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .about-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: transparent;
+            color: white;
+            border: 2px solid var(--light-purple);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 0 20px rgba(225, 190, 231, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-decoration: none;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+            transition: width 0.5s ease;
+            z-index: -1;
+        }
+
+        .hero-btn:hover::before {
+            width: 100%;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 25px rgba(225, 190, 231, 0.6);
+            border-color: transparent;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 60px 40px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .value-card.visible {
+            animation: slideUp 0.8s forwards;
+        }
+
+        .value-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            transition: var(--transition);
+        }
+
+        .value-card:hover .value-icon {
+            background: linear-gradient(45deg, var(--primary-purple), var(--secondary-purple));
+            transform: scale(1.1);
+        }
+
+        .value-icon i {
+            font-size: 2.5rem;
+            color: var(--light-purple);
+        }
+
+        .value-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .value-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-gray);
+        }
+
+        .hero-content h1,
+        .hero-content p {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 1s forwards;
+        }
+
+        .hero-content h1 {
+            animation-delay: 0.3s;
+        }
+
+        .hero-content p {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .about-section {
+                flex-direction: column;
+            }
+            
+            .about-image,
+            .about-text {
+                flex: 0 0 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 2.5rem;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating floating-1"></div>
+    <div class="floating floating-2"></div>
+    <div class="floating floating-3"></div>
+    
+    <header class="glass">
+        <div class="logo">Voyage Vista</div>
+        <div class="breadcrumb">
+            Current Location: <span id="location">Home > About</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="about-hero">
+        <div class="hero-content">
+            <h1 style="font-size: 5rem; font-weight: 900; margin-bottom: 20px; line-height: 1.1; text-shadow: 0 0 15px rgba(225, 190, 231, 0.7), 0 0 30px rgba(225, 190, 231, 0.4), 0 0 60px rgba(225, 190, 231, 0.2); letter-spacing: -1px; text-transform: uppercase; background: linear-gradient(to bottom, #ffffff, #e1bee7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-top: -50px;">About Voyage Vista</h1>
+            <p style="font-size: 1.5rem; max-width: 700px; margin: 0 auto 40px; color: var(--text-gray); line-height: 1.6; font-weight: 300;">Capturing moments, preserving memories, sharing journeys</p>
+            <a href="#story" class="hero-btn">Explore Our Story</a>
+        </div>
+    </section>
+
+    <div class="about-content">
+        <section id="story" class="about-section">
+            <div class="about-image" data-delay="0.1">
+                <img src="./images/Syney9.jpg" alt="Travel photographer with camera">
+            </div>
+            <div class="about-text" data-delay="0.3">
+                <h2 class="about-title">Our Story</h2>
+                <p class="about-description">In a world that moves so fast, we often forget to pause and appreciate the moments that shape us. Voyage Vista was born from a simple yet profound realization: our travel experiences are more than just stamps in a passport - they are emotional landmarks that connect us to people, places, and parts of ourselves we might otherwise forget.</p>
+                <p class="about-description">This platform is my digital memory palace - a place where fleeting moments become eternal memories, where the laughter shared with friends under foreign skies lives on, and where the quiet moments of personal reflection are preserved.</p>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section id="values" class="values-section">
+            <h2 class="section-title">Our Values</h2>
+            
+            <div class="values-grid">
+                <div class="value-card glass" data-delay="0.1">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="value-title">Authenticity</h3>
+                    <p class="value-description">We believe in genuine experiences over picture-perfect moments. Every photo captures real emotions and authentic travel experiences.</p>
+                </div>
+                
+                <div class="value-card glass" data-delay="0.2">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="value-title">Connection</h3>
+                    <p class="value-description">Travel creates bonds - with places, people, and ourselves. Voyage Vista celebrates connections that transcend geography.</p>
+                </div>
+                
+                <div class="value-card glass" data-delay="0.3">
+                    <div class="value-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="value-title">Preservation</h3>
+                    <p class="value-description">Memories fade, but emotions captured through a lens can last forever. We preserve moments that make travel transformative.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="copyright">
+            © 2025 Voyage Vista | Travel Photography Journal. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-delay') || '0';
+                        entry.target.style.transition = `opacity 0.8s ease ${delay}s, transform 0.8s ease ${delay}s`;
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.about-image, .about-text, .value-card').forEach(element => {
+                observer.observe(element);
+            });
+
+            const heroBtn = document.querySelector('.hero-btn');
+            if (heroBtn) {
+                heroBtn.style.opacity = '0';
+                heroBtn.style.transform = 'translateY(30px)';
+                heroBtn.style.transition = 'opacity 1s ease 0.9s, transform 1s ease 0.9s';
+                
+                setTimeout(() => {
+                    heroBtn.style.opacity = '1';
+                    heroBtn.style.transform = 'translateY(0)';
+                }, 100);
+                
+                heroBtn.addEventListener('mouseenter', () => {
+                    heroBtn.style.transform = 'translateY(-5px)';
+                });
+                
+                heroBtn.addEventListener('mouseleave', () => {
+                    heroBtn.style.transform = 'translateY(0)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+    
